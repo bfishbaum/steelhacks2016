@@ -8,7 +8,7 @@
 static void callICE(){
 	DictionaryIterator* iterator;
 	app_message_outbox_begin(&iterator);
-	string key = "Call";
+	int key = 0xca11;
 	int shouldCall = 1;
 	dict_write_int(iterator, key, &shouldCall, sizeof(shouldCall), true);
 	app_message_outbox_send();
