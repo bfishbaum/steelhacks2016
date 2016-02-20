@@ -5,15 +5,11 @@
 	a medical emergency that requires immediate attention
 */
 
-static string APIKey = "";
-int main(void){
-	app_message_open();
-		
-
+static void callICE(){
+	DictionaryIterator* iterator;
+	app_message_outbox_begin(&iterator);
+	string key = "Call";
+	int shouldCall = 1;
+	dict_write_int(iterator, key, &shouldCall, sizeof(shouldCall), true);
+	app_message_outbox_send();
 }
-
-void send_data_to_app(bool fell){
-	Pebble.sendAppMessage({"Fell": fell});
-}
-
-
