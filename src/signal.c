@@ -1,0 +1,8 @@
+/*
+	this code sends a message to
+	some emergency service or other
+	third party when ever our app
+	determines that there may be a
+	medical emergency that requires
+	immediate attention
+*/
