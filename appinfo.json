@@ -1,0 +1,20 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "jahvonrock@yahoo.com",
+    "enableMultiJS": true,
+    "longName": "RUDead",
+    "projectType": "native",
+    "resources": {
+        "media": []
+    },
+    "sdkVersion": "3",
+    "shortName": "RUDead",
+    "uuid": "4feaa59f-1b73-4cbe-ba5f-6930fdc96d01",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
