@@ -1,0 +1,19 @@
+{
+  "uuid": "4025df70-dadf-4cbb-ac0c-1fea2f91dd7d",
+  "shortName": "HealthWatch",
+  "longName": "HealthWatch",
+  "companyName": "MakeAwesomeHappen",
+  "versionLabel": "1.0",
+  "sdkVersion": "3",
+  "targetPlatforms": ["aplite", "basalt", "chalk"],
+  "enableMultiJS": true,
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": []
+  }
+}
