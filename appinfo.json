@@ -1,0 +1,41 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "Benji, David, and Jahvon",
+    "enableMultiJS": true,
+    "longName": "Night Owl",
+    "projectType": "native",
+    "resources": {
+      "media": [
+        {
+          "type": "bitmap",
+          "name": "CONFIRM",
+          "file": "images/confirm.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "CROSS",
+          "file": "images/cross.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "OWL",
+          "file": "images/owl.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "TICK",
+          "file": "images/tick.png"
+        }
+      ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Night Owl",
+    "uuid": "4feaa59f-1b73-4cbe-ba5f-6930fdc96d01",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}
