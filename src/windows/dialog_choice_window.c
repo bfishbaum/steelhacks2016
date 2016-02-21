@@ -1,7 +1,6 @@
 /**
  * Example implementation of the dialog choice UI pattern.
  */
-
 #include "dialog_choice_window.h"
 
 
@@ -12,16 +11,38 @@ static ActionBarLayer *s_action_bar_layer;
 
 static GBitmap *s_tick_bitmap, *s_cross_bitmap;
 
+static void window_unload(Window *window) {
+  text_layer_destroy(s_label_layer);
+  action_bar_layer_destroy(s_action_bar_layer);
+  bitmap_layer_destroy(s_icon_layer);
+
+  gbitmap_destroy(s_tick_bitmap);
+  gbitmap_destroy(s_cross_bitmap);
+
+  window_destroy(window);
+  //s_main_window = NULL;
+}
+
+static void callICE(){
+	DictionaryIterator* iterator;
+	app_message_outbox_begin(&iterator);
+	int key = 0xca11;
+	int shouldCall = 1;
+	dict_write_int(iterator, key, &shouldCall, sizeof(shouldCall), true);
+	app_message_outbox_send();
+}
+
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
   action_bar_layer_destroy(s_action_bar_layer);
   bitmap_layer_destroy(s_icon_layer);
   gbitmap_destroy(s_tick_bitmap);
   gbitmap_destroy(s_cross_bitmap);
   text_layer_set_text(s_label_layer, "Now calling...");
+  callICE();
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-
+	window_unload(s_main_window);
 }
 
 static void click_config_provider(void *context) {
@@ -54,18 +75,6 @@ static void window_load(Window *window) {
   action_bar_layer_set_icon(s_action_bar_layer, BUTTON_ID_UP, s_tick_bitmap);
   action_bar_layer_set_icon(s_action_bar_layer, BUTTON_ID_DOWN, s_cross_bitmap);
   action_bar_layer_add_to_window(s_action_bar_layer, window);
-}
-
-static void window_unload(Window *window) {
-  text_layer_destroy(s_label_layer);
-  action_bar_layer_destroy(s_action_bar_layer);
-  bitmap_layer_destroy(s_icon_layer);
-
-  gbitmap_destroy(s_tick_bitmap);
-  gbitmap_destroy(s_cross_bitmap);
-
-  window_destroy(window);
-  s_main_window = NULL;
 }
 
 void dialog_choice_window_push() {

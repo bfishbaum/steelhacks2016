@@ -1,13 +1,5 @@
-/*
- * main.c
- * Constructs a Window housing an output TextLayer to show data from
- * either modes of operation of the accelerometer.
- */
-
 #include <pebble.h>
 #include "windows/dialog_choice_window.h"
-
-#define TAP_NOT_DATA false
 
 static Window *s_main_window;
 static TextLayer *s_output_layer;
@@ -17,6 +9,8 @@ static GBitmap *s_icon_bitmap;
 int prevX = 0;
 int prevY = 0;
 int prevZ = 0;
+int vibed = 0;
+int stopVibed = 0;
 
 static void data_handler(AccelData *data, uint32_t num_samples) {
   // Long lived buffer
@@ -25,9 +19,13 @@ static void data_handler(AccelData *data, uint32_t num_samples) {
   int avgY = (data[0].y+data[1].y+data[2].y)/3;
   int avgZ = (data[0].z+data[1].z+data[2].z)/3;
 
-  if((abs(prevX-avgX)>2500)||(abs(prevY-avgY)>2500)||(abs(prevZ-avgZ)>2500)){
+  if(((abs(prevX-avgX)>2100)||(abs(prevY-avgY)>2100)||(abs(prevZ-avgZ)>2100))&&(vibed==0&&stopVibed!=2)){
+    if(vibed!=500){
+      vibed = 3;
+      stopVibed++;
+    };
     // Vibe pattern: ON for 200ms, OFF for 100ms, ON for 400ms:
-    static const uint32_t const segments[] = { 200, 100, 200 };
+    static const uint32_t const segments[] = { 200, 50, 200 };
     VibePattern pat = {
       .durations = segments,
       .num_segments = ARRAY_LENGTH(segments),
@@ -35,6 +33,7 @@ static void data_handler(AccelData *data, uint32_t num_samples) {
     vibes_enqueue_custom_pattern(pat);
     dialog_choice_window_push();
   }
+  if(vibed>0){vibed--;}
   prevX = abs(avgX);
   prevY = abs(avgY);
   prevZ = abs(avgZ);
@@ -74,7 +73,7 @@ static void init() {
     .unload = main_window_unload
   });
   window_stack_push(s_main_window, true);
-
+  app_message_open(128,128);
   // Subscribe to the accelerometer data service
   int num_samples = 3;
   accel_data_service_subscribe(num_samples, data_handler);
@@ -86,12 +85,7 @@ static void init() {
 static void deinit() {
   // Destroy main Window
   window_destroy(s_main_window);
-
-  if (TAP_NOT_DATA) {
-    accel_tap_service_unsubscribe();
-  } else {
-    accel_data_service_unsubscribe();
-  }
+  accel_data_service_unsubscribe();
 }
 
 int main(void) {
